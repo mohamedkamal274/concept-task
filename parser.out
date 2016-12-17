@@ -1,0 +1,591 @@
+Created by PLY version 3.9 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> Start
+Rule 1     Start -> foreach
+Rule 2     foreach -> var ASSIGN var BEGIN statementlist END
+Rule 3     statementlist -> statement SEMICOLUMN statementlist
+Rule 4     statementlist -> statement SEMICOLUMN
+Rule 5     statement -> var EQUAL expr
+Rule 6     statement -> functioncall
+Rule 7     expr -> var PLUS expr
+Rule 8     expr -> var MINUS expr
+Rule 9     expr -> var MULTIPLY expr
+Rule 10    expr -> var DIVID expr
+Rule 11    expr -> var
+Rule 12    expr -> OPENPRACS expr CLOSEPRACS
+Rule 13    functioncall -> VAR OPENPRACS parameterList CLOSEPRACS
+Rule 14    parameterList -> parameter
+Rule 15    parameterList -> parameter COMMA parameterList
+Rule 16    parameter -> expr
+Rule 17    var -> VAR
+Rule 18    var -> constant
+Rule 19    constant -> INT
+Rule 20    constant -> FLOAT
+
+Terminals, with rules where they appear
+
+ASSIGN               : 2
+BEGIN                : 2
+CLOSEPRACS           : 12 13
+COMMA                : 15
+DIVID                : 10
+END                  : 2
+EQUAL                : 5
+FLOAT                : 20
+INT                  : 19
+MINUS                : 8
+MULTIPLY             : 9
+OPENPRACS            : 12 13
+PLUS                 : 7
+SEMICOLUMN           : 3 4
+VAR                  : 13 17
+error                : 
+
+Nonterminals, with rules where they appear
+
+Start                : 0
+constant             : 18
+expr                 : 5 7 8 9 10 12 16
+foreach              : 1
+functioncall         : 6
+parameter            : 14 15
+parameterList        : 13 15
+statement            : 3 4
+statementlist        : 2 3
+var                  : 2 2 5 7 8 9 10 11
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . Start
+    (1) Start -> . foreach
+    (2) foreach -> . var ASSIGN var BEGIN statementlist END
+    (17) var -> . VAR
+    (18) var -> . constant
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    VAR             shift and go to state 7
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    constant                       shift and go to state 1
+    var                            shift and go to state 2
+    foreach                        shift and go to state 6
+    Start                          shift and go to state 3
+
+state 1
+
+    (18) var -> constant .
+
+    PLUS            reduce using rule 18 (var -> constant .)
+    MINUS           reduce using rule 18 (var -> constant .)
+    MULTIPLY        reduce using rule 18 (var -> constant .)
+    DIVID           reduce using rule 18 (var -> constant .)
+    COMMA           reduce using rule 18 (var -> constant .)
+    CLOSEPRACS      reduce using rule 18 (var -> constant .)
+    SEMICOLUMN      reduce using rule 18 (var -> constant .)
+    BEGIN           reduce using rule 18 (var -> constant .)
+    ASSIGN          reduce using rule 18 (var -> constant .)
+    EQUAL           reduce using rule 18 (var -> constant .)
+
+
+state 2
+
+    (2) foreach -> var . ASSIGN var BEGIN statementlist END
+
+    ASSIGN          shift and go to state 8
+
+
+state 3
+
+    (0) S' -> Start .
+
+
+
+state 4
+
+    (19) constant -> INT .
+
+    ASSIGN          reduce using rule 19 (constant -> INT .)
+    BEGIN           reduce using rule 19 (constant -> INT .)
+    PLUS            reduce using rule 19 (constant -> INT .)
+    MINUS           reduce using rule 19 (constant -> INT .)
+    MULTIPLY        reduce using rule 19 (constant -> INT .)
+    DIVID           reduce using rule 19 (constant -> INT .)
+    COMMA           reduce using rule 19 (constant -> INT .)
+    CLOSEPRACS      reduce using rule 19 (constant -> INT .)
+    SEMICOLUMN      reduce using rule 19 (constant -> INT .)
+    EQUAL           reduce using rule 19 (constant -> INT .)
+
+
+state 5
+
+    (20) constant -> FLOAT .
+
+    ASSIGN          reduce using rule 20 (constant -> FLOAT .)
+    BEGIN           reduce using rule 20 (constant -> FLOAT .)
+    PLUS            reduce using rule 20 (constant -> FLOAT .)
+    MINUS           reduce using rule 20 (constant -> FLOAT .)
+    MULTIPLY        reduce using rule 20 (constant -> FLOAT .)
+    DIVID           reduce using rule 20 (constant -> FLOAT .)
+    COMMA           reduce using rule 20 (constant -> FLOAT .)
+    CLOSEPRACS      reduce using rule 20 (constant -> FLOAT .)
+    SEMICOLUMN      reduce using rule 20 (constant -> FLOAT .)
+    EQUAL           reduce using rule 20 (constant -> FLOAT .)
+
+
+state 6
+
+    (1) Start -> foreach .
+
+    $end            reduce using rule 1 (Start -> foreach .)
+
+
+state 7
+
+    (17) var -> VAR .
+
+    PLUS            reduce using rule 17 (var -> VAR .)
+    MINUS           reduce using rule 17 (var -> VAR .)
+    MULTIPLY        reduce using rule 17 (var -> VAR .)
+    DIVID           reduce using rule 17 (var -> VAR .)
+    COMMA           reduce using rule 17 (var -> VAR .)
+    CLOSEPRACS      reduce using rule 17 (var -> VAR .)
+    SEMICOLUMN      reduce using rule 17 (var -> VAR .)
+    BEGIN           reduce using rule 17 (var -> VAR .)
+    ASSIGN          reduce using rule 17 (var -> VAR .)
+
+
+state 8
+
+    (2) foreach -> var ASSIGN . var BEGIN statementlist END
+    (17) var -> . VAR
+    (18) var -> . constant
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    VAR             shift and go to state 7
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    constant                       shift and go to state 1
+    var                            shift and go to state 9
+
+state 9
+
+    (2) foreach -> var ASSIGN var . BEGIN statementlist END
+
+    BEGIN           shift and go to state 10
+
+
+state 10
+
+    (2) foreach -> var ASSIGN var BEGIN . statementlist END
+    (3) statementlist -> . statement SEMICOLUMN statementlist
+    (4) statementlist -> . statement SEMICOLUMN
+    (5) statement -> . var EQUAL expr
+    (6) statement -> . functioncall
+    (17) var -> . VAR
+    (18) var -> . constant
+    (13) functioncall -> . VAR OPENPRACS parameterList CLOSEPRACS
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    VAR             shift and go to state 12
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    constant                       shift and go to state 1
+    var                            shift and go to state 14
+    functioncall                   shift and go to state 11
+    statement                      shift and go to state 15
+    statementlist                  shift and go to state 13
+
+state 11
+
+    (6) statement -> functioncall .
+
+    SEMICOLUMN      reduce using rule 6 (statement -> functioncall .)
+
+
+state 12
+
+    (17) var -> VAR .
+    (13) functioncall -> VAR . OPENPRACS parameterList CLOSEPRACS
+
+    EQUAL           reduce using rule 17 (var -> VAR .)
+    OPENPRACS       shift and go to state 16
+
+
+state 13
+
+    (2) foreach -> var ASSIGN var BEGIN statementlist . END
+
+    END             shift and go to state 17
+
+
+state 14
+
+    (5) statement -> var . EQUAL expr
+
+    EQUAL           shift and go to state 18
+
+
+state 15
+
+    (3) statementlist -> statement . SEMICOLUMN statementlist
+    (4) statementlist -> statement . SEMICOLUMN
+
+    SEMICOLUMN      shift and go to state 19
+
+
+state 16
+
+    (13) functioncall -> VAR OPENPRACS . parameterList CLOSEPRACS
+    (14) parameterList -> . parameter
+    (15) parameterList -> . parameter COMMA parameterList
+    (16) parameter -> . expr
+    (7) expr -> . var PLUS expr
+    (8) expr -> . var MINUS expr
+    (9) expr -> . var MULTIPLY expr
+    (10) expr -> . var DIVID expr
+    (11) expr -> . var
+    (12) expr -> . OPENPRACS expr CLOSEPRACS
+    (17) var -> . VAR
+    (18) var -> . constant
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    OPENPRACS       shift and go to state 20
+    VAR             shift and go to state 7
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    parameterList                  shift and go to state 22
+    expr                           shift and go to state 23
+    parameter                      shift and go to state 24
+    var                            shift and go to state 21
+    constant                       shift and go to state 1
+
+state 17
+
+    (2) foreach -> var ASSIGN var BEGIN statementlist END .
+
+    $end            reduce using rule 2 (foreach -> var ASSIGN var BEGIN statementlist END .)
+
+
+state 18
+
+    (5) statement -> var EQUAL . expr
+    (7) expr -> . var PLUS expr
+    (8) expr -> . var MINUS expr
+    (9) expr -> . var MULTIPLY expr
+    (10) expr -> . var DIVID expr
+    (11) expr -> . var
+    (12) expr -> . OPENPRACS expr CLOSEPRACS
+    (17) var -> . VAR
+    (18) var -> . constant
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    OPENPRACS       shift and go to state 20
+    VAR             shift and go to state 7
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    constant                       shift and go to state 1
+    var                            shift and go to state 21
+    expr                           shift and go to state 25
+
+state 19
+
+    (3) statementlist -> statement SEMICOLUMN . statementlist
+    (4) statementlist -> statement SEMICOLUMN .
+    (3) statementlist -> . statement SEMICOLUMN statementlist
+    (4) statementlist -> . statement SEMICOLUMN
+    (5) statement -> . var EQUAL expr
+    (6) statement -> . functioncall
+    (17) var -> . VAR
+    (18) var -> . constant
+    (13) functioncall -> . VAR OPENPRACS parameterList CLOSEPRACS
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    END             reduce using rule 4 (statementlist -> statement SEMICOLUMN .)
+    VAR             shift and go to state 12
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    constant                       shift and go to state 1
+    var                            shift and go to state 14
+    functioncall                   shift and go to state 11
+    statement                      shift and go to state 15
+    statementlist                  shift and go to state 26
+
+state 20
+
+    (12) expr -> OPENPRACS . expr CLOSEPRACS
+    (7) expr -> . var PLUS expr
+    (8) expr -> . var MINUS expr
+    (9) expr -> . var MULTIPLY expr
+    (10) expr -> . var DIVID expr
+    (11) expr -> . var
+    (12) expr -> . OPENPRACS expr CLOSEPRACS
+    (17) var -> . VAR
+    (18) var -> . constant
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    OPENPRACS       shift and go to state 20
+    VAR             shift and go to state 7
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    constant                       shift and go to state 1
+    expr                           shift and go to state 27
+    var                            shift and go to state 21
+
+state 21
+
+    (7) expr -> var . PLUS expr
+    (8) expr -> var . MINUS expr
+    (9) expr -> var . MULTIPLY expr
+    (10) expr -> var . DIVID expr
+    (11) expr -> var .
+
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    MULTIPLY        shift and go to state 31
+    DIVID           shift and go to state 28
+    SEMICOLUMN      reduce using rule 11 (expr -> var .)
+    CLOSEPRACS      reduce using rule 11 (expr -> var .)
+    COMMA           reduce using rule 11 (expr -> var .)
+
+
+state 22
+
+    (13) functioncall -> VAR OPENPRACS parameterList . CLOSEPRACS
+
+    CLOSEPRACS      shift and go to state 32
+
+
+state 23
+
+    (16) parameter -> expr .
+
+    COMMA           reduce using rule 16 (parameter -> expr .)
+    CLOSEPRACS      reduce using rule 16 (parameter -> expr .)
+
+
+state 24
+
+    (14) parameterList -> parameter .
+    (15) parameterList -> parameter . COMMA parameterList
+
+    CLOSEPRACS      reduce using rule 14 (parameterList -> parameter .)
+    COMMA           shift and go to state 33
+
+
+state 25
+
+    (5) statement -> var EQUAL expr .
+
+    SEMICOLUMN      reduce using rule 5 (statement -> var EQUAL expr .)
+
+
+state 26
+
+    (3) statementlist -> statement SEMICOLUMN statementlist .
+
+    END             reduce using rule 3 (statementlist -> statement SEMICOLUMN statementlist .)
+
+
+state 27
+
+    (12) expr -> OPENPRACS expr . CLOSEPRACS
+
+    CLOSEPRACS      shift and go to state 34
+
+
+state 28
+
+    (10) expr -> var DIVID . expr
+    (7) expr -> . var PLUS expr
+    (8) expr -> . var MINUS expr
+    (9) expr -> . var MULTIPLY expr
+    (10) expr -> . var DIVID expr
+    (11) expr -> . var
+    (12) expr -> . OPENPRACS expr CLOSEPRACS
+    (17) var -> . VAR
+    (18) var -> . constant
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    OPENPRACS       shift and go to state 20
+    VAR             shift and go to state 7
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    constant                       shift and go to state 1
+    var                            shift and go to state 21
+    expr                           shift and go to state 35
+
+state 29
+
+    (7) expr -> var PLUS . expr
+    (7) expr -> . var PLUS expr
+    (8) expr -> . var MINUS expr
+    (9) expr -> . var MULTIPLY expr
+    (10) expr -> . var DIVID expr
+    (11) expr -> . var
+    (12) expr -> . OPENPRACS expr CLOSEPRACS
+    (17) var -> . VAR
+    (18) var -> . constant
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    OPENPRACS       shift and go to state 20
+    VAR             shift and go to state 7
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    constant                       shift and go to state 1
+    var                            shift and go to state 21
+    expr                           shift and go to state 36
+
+state 30
+
+    (8) expr -> var MINUS . expr
+    (7) expr -> . var PLUS expr
+    (8) expr -> . var MINUS expr
+    (9) expr -> . var MULTIPLY expr
+    (10) expr -> . var DIVID expr
+    (11) expr -> . var
+    (12) expr -> . OPENPRACS expr CLOSEPRACS
+    (17) var -> . VAR
+    (18) var -> . constant
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    OPENPRACS       shift and go to state 20
+    VAR             shift and go to state 7
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    constant                       shift and go to state 1
+    var                            shift and go to state 21
+    expr                           shift and go to state 37
+
+state 31
+
+    (9) expr -> var MULTIPLY . expr
+    (7) expr -> . var PLUS expr
+    (8) expr -> . var MINUS expr
+    (9) expr -> . var MULTIPLY expr
+    (10) expr -> . var DIVID expr
+    (11) expr -> . var
+    (12) expr -> . OPENPRACS expr CLOSEPRACS
+    (17) var -> . VAR
+    (18) var -> . constant
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    OPENPRACS       shift and go to state 20
+    VAR             shift and go to state 7
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    constant                       shift and go to state 1
+    var                            shift and go to state 21
+    expr                           shift and go to state 38
+
+state 32
+
+    (13) functioncall -> VAR OPENPRACS parameterList CLOSEPRACS .
+
+    SEMICOLUMN      reduce using rule 13 (functioncall -> VAR OPENPRACS parameterList CLOSEPRACS .)
+
+
+state 33
+
+    (15) parameterList -> parameter COMMA . parameterList
+    (14) parameterList -> . parameter
+    (15) parameterList -> . parameter COMMA parameterList
+    (16) parameter -> . expr
+    (7) expr -> . var PLUS expr
+    (8) expr -> . var MINUS expr
+    (9) expr -> . var MULTIPLY expr
+    (10) expr -> . var DIVID expr
+    (11) expr -> . var
+    (12) expr -> . OPENPRACS expr CLOSEPRACS
+    (17) var -> . VAR
+    (18) var -> . constant
+    (19) constant -> . INT
+    (20) constant -> . FLOAT
+
+    OPENPRACS       shift and go to state 20
+    VAR             shift and go to state 7
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+
+    parameterList                  shift and go to state 39
+    expr                           shift and go to state 23
+    parameter                      shift and go to state 24
+    var                            shift and go to state 21
+    constant                       shift and go to state 1
+
+state 34
+
+    (12) expr -> OPENPRACS expr CLOSEPRACS .
+
+    SEMICOLUMN      reduce using rule 12 (expr -> OPENPRACS expr CLOSEPRACS .)
+    CLOSEPRACS      reduce using rule 12 (expr -> OPENPRACS expr CLOSEPRACS .)
+    COMMA           reduce using rule 12 (expr -> OPENPRACS expr CLOSEPRACS .)
+
+
+state 35
+
+    (10) expr -> var DIVID expr .
+
+    SEMICOLUMN      reduce using rule 10 (expr -> var DIVID expr .)
+    CLOSEPRACS      reduce using rule 10 (expr -> var DIVID expr .)
+    COMMA           reduce using rule 10 (expr -> var DIVID expr .)
+
+
+state 36
+
+    (7) expr -> var PLUS expr .
+
+    SEMICOLUMN      reduce using rule 7 (expr -> var PLUS expr .)
+    CLOSEPRACS      reduce using rule 7 (expr -> var PLUS expr .)
+    COMMA           reduce using rule 7 (expr -> var PLUS expr .)
+
+
+state 37
+
+    (8) expr -> var MINUS expr .
+
+    SEMICOLUMN      reduce using rule 8 (expr -> var MINUS expr .)
+    CLOSEPRACS      reduce using rule 8 (expr -> var MINUS expr .)
+    COMMA           reduce using rule 8 (expr -> var MINUS expr .)
+
+
+state 38
+
+    (9) expr -> var MULTIPLY expr .
+
+    SEMICOLUMN      reduce using rule 9 (expr -> var MULTIPLY expr .)
+    CLOSEPRACS      reduce using rule 9 (expr -> var MULTIPLY expr .)
+    COMMA           reduce using rule 9 (expr -> var MULTIPLY expr .)
+
+
+state 39
+
+    (15) parameterList -> parameter COMMA parameterList .
+
+    CLOSEPRACS      reduce using rule 15 (parameterList -> parameter COMMA parameterList .)
+
