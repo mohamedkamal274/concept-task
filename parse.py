@@ -23,7 +23,7 @@ def print_Tree(tree, level=1):
                 for value in l:
                     if value == '\n':
                         value = 'newline'
-                    if type(value) is int:
+                    if type(value) is int or type(value) is float:
                         value = str(value)
                     if (isinstance(value , Node)):
                         print_Tree(value, level + 1)
@@ -130,7 +130,7 @@ parser = yacc.yacc()
 input = """a => b
 BEGIN:
 a = b / z;
-add(a+b,s,(a+5));
+add(a+b,s,(a+5.5));
 END:"""
 
 #Parse input
