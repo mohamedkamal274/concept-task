@@ -67,4 +67,4 @@ def t_INT(t):
     except ValueError:
         print("Integer value too large %d", t.value)
         t.value = 0
-    return
+    return t

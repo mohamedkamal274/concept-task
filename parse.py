@@ -129,8 +129,9 @@ parser = yacc.yacc()
 
  #input
 input = """a => b BEGIN:
-a = b / z;
-add(a+b,s,(a+5.5));
+a = a + z + 5 + z;
+add(a+b,s,(a+5.5 + 5));
+z(s);
 END:
 """
 
