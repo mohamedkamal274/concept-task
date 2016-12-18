@@ -17,12 +17,10 @@ def print_Tree(tree, level=1):
     print('    ' * (level - 1) + '--->' * (level > 0) + tree.data)
     for l in tree.children:
         if isinstance(l, Node):
-            print_list(l, level + 1)
+            print_Tree(l, level + 1)
         else:
             if type(l) is list:
                 for value in l:
-                    if value == '\n':
-                        value = 'newline'
                     if type(value) is int or type(value) is float:
                         value = str(value)
                     if (isinstance(value , Node)):
@@ -35,8 +33,11 @@ def print_Tree(tree, level=1):
 #build lex for lexical file
 lexer = lex.lex(main)
 #parser part
-def p_error(p):
-    print("Error in line ", (p.lineno), " Illegal " ,p.value)
+def p_error(t):
+    try:
+        print("Syntax error at '%s'" % t.value)
+    except:
+        print("Syntax error")
 
 def p_startforeach(p):
     "Start : foreach"
@@ -127,11 +128,11 @@ def p_constant(p):
 parser = yacc.yacc()
 
  #input
-input = """a => b
-BEGIN:
+input = """a => b BEGIN:
 a = b / z;
 add(a+b,s,(a+5.5));
-END:"""
+END:
+"""
 
 #Parse input
 parser.parse(input)

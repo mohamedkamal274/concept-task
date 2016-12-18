@@ -29,11 +29,12 @@ t_MULTIPLY = r'\*'
 t_DIVID = r'\/'
 
 def t_error(t):
-    print("error")
+    print("Illegal character '%s'" % t.value[0])
+    t.lexer.skip(1)
 
 def t_newline(t):
-    r'\n'
-    t.lexer.lineno += 1
+    r'\n+'
+    t.lexer.lineno += t.value.count("\n")
 
 def t_BEGIN(t):
     r'BEGIN:'
@@ -52,10 +53,18 @@ def t_VAR(t):
 
 def t_FLOAT(t):
     r'\d+\.\d+'
-    t.value = float(t.value)
+    try:
+        t.value = float(t.value)
+    except ValueError:
+        print("Float value too large %d", t.value)
+        t.value = 0.0
     return t
 
 def t_INT(t):
     r'\d+'
-    t.value = int(t.value)
-    return t
+    try:
+        t.value = int(t.value)
+    except ValueError:
+        print("Integer value too large %d", t.value)
+        t.value = 0
+    return
