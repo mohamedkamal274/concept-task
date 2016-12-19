@@ -44,7 +44,8 @@ def p_error(t):
         globz.append("Syntax error")
 
 def p_startforeach(p):
-    "Start : foreach"
+    '''Start : foreach
+             | foreach Start'''
     print_Tree(p[1])
 def p_foreach(p):
     """
