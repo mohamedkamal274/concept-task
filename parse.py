@@ -2,6 +2,8 @@ import lexical as main
 from lexical import tokens
 import ply.lex as lex
 import ply.yacc as yacc
+import sys
+from PyQt5.QtWidgets import *
 
 #tree Data Structer 
 class Node(object):
@@ -14,7 +16,8 @@ class Node(object):
 
 #function print tree
 def print_Tree(tree, level=1):
-    print('    ' * (level - 1) + '--->' * (level > 0) + tree.data)
+    global globz
+    globz.append('    ' * (level - 1) + '--->' * (level > 0) + tree.data)
     for l in tree.children:
         if isinstance(l, Node):
             print_Tree(l, level + 1)
@@ -26,18 +29,19 @@ def print_Tree(tree, level=1):
                     if (isinstance(value , Node)):
                         print_Tree(value, level + 1)
                     else:
-                        print('    ' * level + '--->' + value)
+                        globz.append('    ' * level + '--->' + value)
             else:
 
-                print('    ' * level + '+---' + str(l))
+                globz.append('    ' * level + '+---' + str(l))
 #build lex for lexical file
 lexer = lex.lex(main)
 #parser part
 def p_error(t):
+    global globz
     try:
-        print("Syntax error at '%s'" % t.value)
+        globz.append("Syntax error at '%s'" % t.value)
     except:
-        print("Syntax error")
+        globz.append("Syntax error")
 
 def p_startforeach(p):
     "Start : foreach"
@@ -124,16 +128,62 @@ def p_constant(p):
     x.add_child(p[1:])
     p[0] = x
 
-#Build Parser
-parser = yacc.yacc()
 
- #input
-input = """a => b BEGIN:
+#input
+"""input = a => b BEGIN:
 a = a + z + 5 + z;
 add(a+b,s,(a+5.5 + 5));
 z(s);
-END:
-"""
+END:"""
 
 #Parse input
-parser.parse(input)
+def parser(input):
+    parser = yacc.yacc()
+    parser.parse(input)
+
+
+
+class App(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.title = 'Concept Task'
+        self.left = 100
+        self.top = 100
+        self.width = 700
+        self.height = 600
+        self.setFixedSize(self.width,self.height)
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+
+        # Create
+        self.textEdite = QTextEdit(self)
+        self.textEdite.move(20, 0)
+        self.textEdite.resize(500, 300)
+        # Create
+        self.reusltText = QTextEdit(self)
+        self.reusltText.move(20, 320)
+        self.reusltText.resize(500, 280)
+        self.reusltText.setReadOnly(True)
+
+        # Create a button in the window
+        self.button = QPushButton('parse', self)
+        self.button.move(550, 140)
+
+        # connect button to function on_click
+        self.button.clicked.connect(self.on_click)
+        self.show()
+
+    def on_click(self):
+        self.reusltText.setText('')
+        textboxValue = self.textEdite.toPlainText()
+        parser(textboxValue)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = App()
+    globz = ex.reusltText
+    sys.exit(app.exec_())
