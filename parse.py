@@ -1,5 +1,5 @@
 import lexical as main
-from lexical import tokens
+from lexical import *
 import ply.lex as lex
 import ply.yacc as yacc
 import sys
@@ -36,10 +36,10 @@ def print_Tree(tree, level=1):
 #build lex for lexical file
 lexer = lex.lex(main)
 #parser part
-def p_error(t):
+def p_error(p):
     global globz
     try:
-        globz.append("Syntax error at '%s'" % t.value)
+        globz.append("Syntax error at " + p.value)
     except:
         globz.append("Syntax error")
 
@@ -181,6 +181,12 @@ class App(QMainWindow):
         self.reusltText.setText('')
         textboxValue = self.textEdite.toPlainText()
         parser(textboxValue)
+        if len(getarr()) >= 1:
+            self.reusltText.setText('')
+            for x in getarr():
+                self.reusltText.append(x)
+            clearARRAYERROR()
+
 
 
 if __name__ == '__main__':
